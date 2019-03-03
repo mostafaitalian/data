@@ -1,0 +1,5 @@
+dear sir,
+
+ thank you for joining our site , to activate please check the activation link below
+ 
+ {{protocol}}://{{domain}}{% url 'userr:user_activate' uid token %}

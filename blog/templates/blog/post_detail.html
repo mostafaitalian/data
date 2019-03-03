@@ -1,0 +1,59 @@
+{% extends parent_template|default:'blog/base_blog.html' %}
+{% block title %}{{block.super}}-- {{ post.title|title }}{% endblock %}
+{% block main %}
+<div class="row">
+<div class ="nine columns">
+<div class="container">
+<div class="header">
+<h2>{{ post.title|title }}</h2>
+<p>
+Written on
+<time datetime="{{ post.pub_date|date:"Y-m-d" }}">
+{{ post.pub_date|date:"l, F j, Y" }}
+</time>
+</p>
+</div>
+{{ post.text|linebreaks }}
+<hr>
+</div>
+{% if post.startups.all or post.tags.all %}
+{% if post.startups.all %}
+<div class="container">
+<h3>Startup{{ post.startups.count|pluralize }}</h3>
+<ul>
+{% for startup in post.startups.all %}
+<li><a href="{% url 'organizer:organizer_startup_detail' slug=startup.slug %}">
+{{ startup.name }}
+</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+{% if post.tags.all %}
+<section>
+<h3>Tag{{ post.tags.count|pluralize }}</h3>
+<ul>
+{% for tag in post.tags.all %}
+<li><a href="{% url 'organizer:organizer_tag_detail' slug=tag.slug %}">
+{{ tag.name|title }}
+</a></li>
+{% endfor %}
+</ul>
+</section>
+{% endif %}
+</div>
+{% endif %}
+</div>
+
+</div>
+<div class="row">
+<div class="four columns" style="text-align: center;">
+<h6><strong>If you want to create another post</strong><br><a class="button button-primary" href="{% url 'blog:blog_post_create' %}"><em>click here</em></a></h6>
+</div>
+<div class="four columns" style="text-align: center;">
+<h6><strong>If you want to update this post</strong><br><a class="button btn-warning" href="{% url 'blog:blog_post_update' year=post.pub_date.year month=post.pub_date.month slug=post.slug %}"><em>click here</em></a></h6>
+</div>
+<div class="four columns" style="text-align: center;">
+<h6><strong>If you want to delete this post</strong><br><a class="button btn-danger" href="{% url 'blog:blog_post_delete' year=post.pub_date.year month=post.pub_date.month slug=post.slug %}"><em>click here</em></a></h6>
+</div>
+</div>
+{% endblock %}

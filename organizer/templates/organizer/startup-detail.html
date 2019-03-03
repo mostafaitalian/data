@@ -1,0 +1,73 @@
+{% extends parent_template|default:'organizer/base_organizer.html' %}
+<style type="text/css">
+.raw{
+display: inline-block;
+}
+</style>
+{% block menu %}
+<li class="navbar-item">
+<a class="navbar-link" href="{% url 'organizer:organizer_startup_update' slug=startup.slug  %}">edit {{startup.name}} fields</a>
+</li>
+{% endblock %}
+{% block main %}
+<div class="container">
+
+<h2><strong>{{ startup.name }} -- {{startup.slug}}</strong></h2>
+<div class="raw">
+<div class="col-md-4 col-lg-3">
+<h6>foundation date</h6>
+<br/>{{ startup.founded_date|date:"DATE_FORMAT" }}
+<h6>foundation date</h6>
+<br/>{{ startup.founded_date|date:"F jS, Y" }}
+<h6>foundation date</h6>
+<br/>{{ startup.founded_date|date:"SHORT_DATE_FORMAT" }}
+</div>
+<div class="col-md-4 col-lg-4">
+<h3><a href="{{startup.website}}">startup website</a></h3><br>
+{{ startup.website }}
+<h3>startup website</h3><br>
+{{ startup.website|urlize}}
+</div>
+<div class="col-md-4 col-lg-4">
+<h6>startup contact </h6>
+<br/>
+{{startup.contact}}
+</div>
+</div>
+<div class="raw">
+<div class="col-md-12 col-lg-12">
+<h3>tag{{startup.tags.count|pluralize}}</h3>
+<ul>
+{% for tag in startup.tags.all %}
+<li><a href="{% url 'organizer:organizer_tag_detail' slug=tag.slug %}">{{tag.name|title}} </a></li>
+{% empty %}
+<li>there is no tag click<a href="{% url 'organizer:organizer_tag_list' %}">here</a></li>
+{% endfor %}
+</ul>
+</div>
+<div class="col-md-12 col-lg-12">
+<h3>newslink{{startup.newslink_set.count|pluralize}}</h3>
+{% if startup.newslink_set.all %}
+<ul>
+{% for newslink in startup.newslink_set.all %}
+<li><a href="#">{{newslink.title|title}} </a></li>
+{% endfor %}
+</ul>
+{% endif %}
+<ul>
+{% for post in startup.blog_posts.all %}
+<li><a href="#">{{post.title|title}} </a></li>
+{% endfor %}
+</ul>
+<ul>
+{% for post in startup.published_posts %}
+<li><a href="#">{{post.title|title}} </a></li>
+{% endfor %}
+</ul>
+{% endif %}
+<h3>Description</h3>
+<p>{{ startup.description|linebreaks}}</p>
+</div>
+</div>
+</div>
+{% endblock %}

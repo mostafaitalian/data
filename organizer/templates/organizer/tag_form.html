@@ -1,0 +1,32 @@
+{% extends parent_template|default:"organizer/base_organizer.html" %}
+
+
+{% block title %}create tag -- {{ block.super }}  {% endblock %}
+
+
+{% block main %}
+
+<form method="post" action="{% url 'organizer:organizer_tag_create' %}">
+{% csrf_token %}
+<div>
+{{ form.non_field_errors }}
+{{ form.name.errors }}
+{{ form.slug.errors }}
+</div>
+<p>
+<label for="id_name" >Name: </label>
+<input id="id_name" maxlength="31" name="name" type="text"/>
+<h2>{{form.name}}</h2>
+</p>
+<p>
+<label for="id_slug">Slug: </label>
+<input id="id_slug" type="text" maxlength="31" name="slug"/>
+{% if form.slug %}
+<h2>{{form.slug}}</h2>
+{% endif %}
+<span class="helptext">A label for url config</span>
+</p>
+<button type="submit">Create tag</button>
+</form>
+
+{%endblock%}

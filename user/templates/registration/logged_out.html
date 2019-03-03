@@ -1,0 +1,18 @@
+{% extends parent_template|default:'user_base.html' %}
+
+
+{% block title %}{{block.super}} - Logout  {% endblock %}
+
+
+{% block main %}
+<p>thank you for being one of our visitors, we hope that you visit us again.
+<br>
+if you want to login again<a class="btn btn-primary" href="{% url 'userr:user_login' %}"><em>Click here</em></a>
+</p>
+<br><br>
+<div class="row">
+<div class="offset-by-two five columns">
+{% include "user/login_form.html" %}
+</div>
+</div>
+ {% endblock %}

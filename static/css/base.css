@@ -1,0 +1,31 @@
+@charset "ISO-8859-1";
+body{
+background-color: blue;
+}
+#nav-container{
+border-color: fuchsia;
+font-family: sans-serif;
+background: yellow;
+color: black;
+width: 90%;
+height: 96%
+}
+.navbar-brand{
+border: thin;
+}
+footer{
+position: static ;
+align-items:center;
+bottom: 3%;
+font-style: italic;
+font-size: medium;
+color: black;
+align-content: space-between;
+display: block;
+}
+.navbar-nav{
+display: inline-block;
+}
+.navbar-item{
+display: inline-block;
+margin-right: 5%;}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+{% load static %}
+{% load staticfiles %}
+{% load flatpages %}
+{% get_flatpages as flatpages %}
+<html>
+<head>
+<meta charset="UTF-8">
+<title>{% block title%}Startup Organizer{% endblock %}</title>
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"/> -->
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}"/> -->
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'organizer/normalize.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'organizer/skeleton.css' %}"/>
+<link rel="alternative" type="application/atom+xml" title="Blog News Feeds" href="{% url 'atom' %}">
+<link rel="alternative" type="application/rss+xml" title="Blog Rss Feeds" href="{% url 'rss' %}">
+<style type="text/css">
+#ul li{
+display: inline-block;
+padding:5mm;
+text-shadow: red;
+}
+nav{
+display:inline-block;a
+background: menu;
+text-align: center;
+}
+#image{
+padding:10px;
+margin-left: inherit;
+}
+nav{
+width: 100%;
+}
+footer{
+text-align: left;
+margin-top: 95% }
+</style>
+{% block head %}{% endblock %}
+
+</head>
+<body>
+<div class="container-fluid" id="nav-container" style="margin: 10mm;">
+<nav class="navbar navbar-light bg-light">
+<img id="image" src="{% static 'site/xerox_logo.png' %}" alt="Site Logo">
+<a class="navbar-brand" href="#">SuOrganizer</a>
+<ul class="navbar-nav" id="ul">
+{% block menu %}{% endblock %}
+<li class="navbar-item"><a href="{% url 'contact:contact_help' %}">Contact</a></li>
+{% if flatpages %}
+{% for page in flatpages %}
+<li class="navbar-item"><a href="/page{{page.get_absolute_url}}">{{ page.title }}</a></li>
+{% endfor %}
+{% endif %}
+<li class="navbar-item">
+<a class="navbar-link" href="{% url 'blog:blog_post-list' %}">Blogs</a>
+</li>
+<li class="navbar-item">
+<a class="navbar-link" href="{% url 'organizer:organizer_startup_list' %}">Startups</a>
+</li>
+<li class="navbar-item">
+<a class="navbar-link" href="{% url 'organizer:organizer_tag_list' %}">Tags</a>
+</li>
+<li><a href="{% url 'userr:user_logout' %}?next={{ request.path }}">click1</a></li>
+<li><a href="{% url 'userr:user_login' %}?next={{ request.path }}">click2</a></li>
+{% if request.user.is_authenticated %}
+<li class="navbar-item">
+<a class="navbar-link" href="{% url 'userr:user_logout' %}">Logout</a>
+</li>
+{% else %}
+<li class="navbar-item">
+<a class="navbar-link" href="{% url 'userr:user_login' %}">Login</a>
+</li>
+<li class="navbar-item">
+<a class="navbar-link" href="{% url 'userr:register' %}">Register</a>
+</li>
+{% endif %}
+</ul>
+</nav>
+{% if messages %}
+<ul class="messages">
+{% for message in messages %}
+<li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% block main %}{% endblock %}
+{% if messages %}
+<div class="row">
+<div class="twelve columns">
+<ul class="messages">
+{% for message in messages %}
+{% if message.tags %}
+<li class="{{ message.tags }}">
+{% else %}
+<li>
+{% endif %}
+{{ message }}</li>
+{% endfor %}
+</ul></div></div>
+{% endif %}
+</div>
+<footer style="margin: 10mm;">
+<ul>
+<li><a class="feed" href="{% url 'atom' %}">latest atom posts</a></li>
+<li><a class="feed" href="{% url 'rss' %}">latest rss posts</a></li>
+</ul>
+<p>
+&copy; 2019
+<a href="https://mostafamohamed.com/">
+Mostafa Mohamed</a>
+</p>
+<p>
+Created for
+<a href="https://kooora.com/">
+Django Unleashed</a>
+</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{% extends parent_template|default:"organizer/base_organizer.html" %}
+{% load crispy_forms_tags %}
+{% load markdownify %}
+
+{% block title %}update post -- {{ block.super }}  {% endblock %}
+
+
+{% block main %}
+<div><div><form action=""  method="post">
+{% csrf_token %}
+{{ form|crispy }}
+<button type="submit">update post</button>
+</form></div></div>
+{% endblock %}

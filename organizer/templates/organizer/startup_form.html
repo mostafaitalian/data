@@ -1,0 +1,13 @@
+{% extends parent_template|default:"organizer/base_organizer.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}create startup -- {{ block.super }}  {% endblock %}
+
+
+{% block main %}
+<div><div><form action="" method="post">
+{% csrf_token %}
+{{ form|crispy }}
+<button type="submit">create startup</button>
+</form></div></div>
+{% endblock %}

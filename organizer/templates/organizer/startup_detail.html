@@ -1,0 +1,73 @@
+{% extends parent_template|default:'base.html' %}
+{% load obfuscate_email %}
+{% load partial_post_list %}
+{% block main %}
+<div class="container">
+
+<h4>{{ startup.name }}</h4>
+<div class="raw">
+<div class="offset-by-2 eight columns">
+<div class="row">
+<h6>foundation date</h6>
+<br>{{ startup.founded_date }}
+</div>
+<div class="row">
+<h6> startup website </h6><br/>
+{{ startup.website }}
+</div>
+<div class="row">
+<h6>startup contact </h6>
+<br/>
+{{startup.contact|abfuscate}}
+</div>
+</div>
+</div>
+<div class="row">
+<div class="eight columns">
+<h3>tag{{startup.tags.count|pluralize}}</h3>
+<ul>
+{% for tag in startup.tags.all %}
+<li><a href="{% url 'organizer:organizer_tag_detail' slug=tag.slug %}">{{tag.name|title}} </a></li>
+{% empty %}
+<li>there is no tag click<a href="#">here</a></li>
+{% endfor %}
+</ul>
+{% forrmat_post_list startup %}
+</div>
+<div class="four columns">
+<h6>newslinks{{startup.newslink_set.count|pluralize}}</h6>
+{% if startup.newslink_set.all %}
+<ul>
+{% for newslink in startup.newslink_set.all %}
+<li><a href="#">{{newslink.title|title}} </a></li>
+{% endfor %}
+</ul>
+{% endif %}
+{% for post in startup.blog_posts.all %}
+<li><a href="#">{{post.title|title}} </a></li>
+{% endfor %}
+</ul>
+<ul>
+{% for post in startup.published_posts %}
+<li><a href="#">{{post.title|title}} </a></li>
+{% endfor %}
+</ul>
+ {% if perms.blog.view_future_post and startup.blog_posts.all %}
+ {% with post_list=startup.blog_posts.all %}
+ <h3>Blog Post{{ post_list|pluralize }}</h3>
+ {% format_post_list post_list %}
+ {% endwith %}
+ {% elif startup.published_posts|length > 0 %}
+ <h3>Blog Post{{ startup.published_posts|pluralize }}</h3>
+ {% format_post_list startup.published_posts %}
+ {% endif %}
+<hr>
+<dl>
+<dt>Feeds</dt>
+<dd><a href="{{ startup.get_feed_atom_url }}">Atom</a></dd>
+<dd><a href="{{ startup.get_feed_rss_url }}">RSS</a></dd>
+</dl>
+</div>
+</div>
+</div>
+{% endblock %}

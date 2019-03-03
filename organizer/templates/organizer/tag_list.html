@@ -1,0 +1,53 @@
+{% extends parent_template|default:'organizer/base_organizer.html' %}
+
+{% block title %}{{ block.super }} -- Tag List{% endblock %}
+{% block menu %}
+<li class="navbar-item">
+<a class="navbar-link" href="{% url 'organizer:organizer_tag_create'  %}">Create a new Tag</a>
+</li>
+{% endblock %}
+{% block main %}
+<div class="row">
+<div class="eight columns">
+<h1>tag list</h1>
+<ul>
+{% for tag in tag_list %}
+<li><a href="{% url 'organizer:organizer_tag_detail' slug=tag.slug %}">{{tag.name|title}} - {{tag.slug}}</a></li>
+{% empty %}
+<li>thers are no tags available</li>
+{% endfor %}
+</ul>
+</div>
+<div class="four columns">
+<li><a href="">page{{tag_list.number}} of {{paginator.num_pages}} page{{paginator.num_pages|pluralize}}</a></li>
+</div>
+<div class="row">
+<h1><a href="{% url 'organizer:organizer_tag_create' %}">Create new Tag</a></h1>
+<ul class="pagination">
+{% if tag_list.has_previous %}
+<li><a href="?page={{ tag_list.previous_page_number }}">&laquo;</a></li>
+{% else %}
+<li class="disabled"><span>&laquo;</span></li>
+{% endif %}
+{% for i in paginator.page_range %}
+{% if tag_list.number == i %}
+<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+{% else %}
+<li><a href="?page={{ i }}">{{ i }}</a></li>
+{% endif %}
+{% endfor %}
+{% if tag_list.has_next %}
+<li><a href="?page={{ tag_list.next_page_number }}">&raquo;</a></li>
+{% else %}
+<li class="disabled"><span>&raquo;</span></li>
+{% endif %}
+</ul>
+
+<li>
+Page {{ tag_list.number }}
+of {{ paginator.num_pages }}
+</li>
+
+</div>
+</div>
+{% endblock %}

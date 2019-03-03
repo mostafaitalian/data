@@ -1,0 +1,16 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<p>{% extends parent_template|default:&quot;organizer/base_organizer.html&quot; %} {% block title %}create tag -- {{ block.super }} {% endblock %} {% block main %}</p>
+
+<div>
+<div>
+<form action="{% url 'organizer:organizer_tag_create' %}" method="post">{% csrf_token %} {{ form.as_p }}<button type="submit">create tag</button></form>
+</div>
+</div>
+
+<p>{% endblock %}</p>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{% extends parent_template|default:'organizer/base_organizer.html' %} 
+
+{% block title %}{{block.super}}--{{tag.name}}{% endblock %}
+{% block menu %}
+<li class="navbar-item">
+<a class="navbar-link" href="{% url 'organizer:organizer_tag_update' slug=tag.slug  %}">edit {{tag.name}} fields</a>
+</li>
+{% endblock %}
+{% block main %}
+<h2>{{tag.name}}</h2>
+{% if tag.startup_set.all %}
+<section>
+<h3>Startup</h3>
+<p>tag is associated with {{tag.startup_set.all|length}} startup{{tag.startup_set.count|pluralize}}</p>
+<ul>
+{% for startup in tag.startup_set.all %}
+<li><a href="{% url 'organizer:organizer_startup_detail' slug=startup.slug %}">{{startup.name}}</a></li>
+{% endfor %}
+</ul>
+</section>
+{% else %}
+<p> the tag is not related to any startup </p>
+{% endif %}
+
+{% if tag.blog_posts.all %}
+<h3> posts </h3>
+<section>
+<ul>
+{% for post in tag.blog_posts.all %}
+<li><a href="{% url 'blog:blog_post_detail' year=post.pub_date.year month=post.pub_date.month slug=post.slug %}">{{post.title|title}}
+</a></li>
+{% endfor %}
+</ul>
+</section>
+{% endif %}
+{%  if not tag.startup.all and tag.post_set.all %}
+<p>this tag is not related to any startup or post </p>
+{% endif %}
+{% endblock %}

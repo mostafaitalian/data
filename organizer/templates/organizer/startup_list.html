@@ -1,0 +1,68 @@
+{% extends parent_template|default:'organizer/base_organizer.html'%}
+{% block menu %}
+<li class="navbar-item">
+<a class="navbar-link" href="{% url 'organizer:organizer_startup_create' %}">Create new Startup</a>
+</li>
+{% endblock %}
+{% block main %}
+{% block org_content %}
+<h2>Startup List</h2>
+<div class="mobile">
+<a href="{% url 'organizer:organizer_startup_create' %}"
+class="button button-primary">
+Create New Startup</a>
+</div>
+{% endblock %}
+{% block create_button %}
+<a href="{% url 'organizer:organizer_startup_create' %}"
+class="button button-primary">
+Create New Startup</a>
+{% endblock %}
+<h3>startup{{startup_list|length|pluralize}}</h3>
+<ul>
+{% for startup in startup_list %}
+<li><a href="{{ startup.slug }}">{{ startup.name }} -- {{startup.slug}}</a></li>
+{% empty %}
+<li><em>there is no startup yet</em></li>
+{% endfor %}
+</ul>
+{% if startup_list.has_pages %}
+<ul>
+{% if startup_list.has_previous %}
+<li>page{{ startup_list.previous_page_number }}</li>
+{% endif %}
+<li>page{{startup_list.number}} of {{startup_list.paginator.num_pages}}</li>
+{% if startup_list.has_next %}
+<li>page{{startup_list.next_page_number}}</li>
+{% endif %}
+</ul>
+{% endif %}
+<ul>
+{% if startup_list.has_previous %}
+<li><a href="{{previous}})">page{{ startup_list.previous_page_number }}</a></li>
+{% endif %}
+<li>page{{startup_list.number}} of {{startup_list.paginator.num_pages}}</li>
+{% if startup_list.has_next %}
+<li><a href="{{next}}">page{{startup_list.next_page_number}}</a></li>
+{% endif %}
+</ul>
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endblock %}

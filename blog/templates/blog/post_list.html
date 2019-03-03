@@ -1,0 +1,14 @@
+{% extends parent_template|default:'blog/base_blog.html' %}
+{% block title %}{{block.super}}-- post list{% endblock %}
+{% block main %}
+<article>
+<h2>Post{{post_list|length|pluralize}}</h2>
+<ul>
+{% for post in post_list %}
+<li><a href="{% url 'blog:blog_posta_detail' year=post.pub_date.year month=post.pub_date.month day=post.pub_date.day slug=post.slug %}">{{post.title|title}}</a> -- {{post.slug}}</li>
+{% empty %}
+<li> no post here </li>
+{% endfor %}
+</ul>
+</article>
+{% endblock %}

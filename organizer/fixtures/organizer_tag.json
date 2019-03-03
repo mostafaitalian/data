@@ -1,0 +1,42 @@
+[
+{
+  "model": "organizer.tag",
+  "pk": 1,
+  "fields": {
+    "name": "software",
+    "slug": "software"
+  }
+},
+{
+  "model": "organizer.tag",
+  "pk": 2,
+  "fields": {
+    "name": "programming",
+    "slug": "programming"
+  }
+},
+{
+  "model": "organizer.tag",
+  "pk": 3,
+  "fields": {
+    "name": "oop language",
+    "slug": "oop"
+  }
+},
+{
+  "model": "organizer.tag",
+  "pk": 4,
+  "fields": {
+    "name": "film",
+    "slug": "film"
+  }
+},
+{
+  "model": "organizer.tag",
+  "pk": 5,
+  "fields": {
+    "name": "film en",
+    "slug": "film-en"
+  }
+}
+]

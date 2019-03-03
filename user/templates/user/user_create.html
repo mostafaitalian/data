@@ -1,0 +1,14 @@
+{% extends parent_template|default:'user_base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}{{block.super}}--create user{% endblock %}
+{% block main %}
+<div class="row">
+<div class="offset-by-2 eight columns">
+<form method="post", action="">
+{% csrf_token %}
+{{ form|crispy }}
+<button type="submit" class="btn btn-primary">signup now</button>
+</form>
+</div>
+</div>
+{% endblock %}

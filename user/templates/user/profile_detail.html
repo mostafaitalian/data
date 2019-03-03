@@ -1,0 +1,39 @@
+{% extends parent_template|default:"user_base.html" %}
+
+{% block title %}{{profile.user.username}} profile{% endblock %}
+
+{% block main %}
+<div class="row">
+{% if user.pk == profile.user.pk %}
+<div class="offset-by-2 five columns">
+<h2>{{profile.user.get_username}}</h2>
+{{profile.about|default:"no profile"|linebreaks}}
+</div>
+{% else %}
+<div class="offset-by-2 eight columns">
+<h2>{{profile.user.get_username}}</h2>
+{{profile.about|default:"no profile"|linebreaks}}</div>
+{% endif %}
+{% if perms.blog.view_future_post and profile.user.blog_posts.all %}
+<h3>Post{{profile.user.blog_posts.all|pluralize}}</h3>
+<ul>
+{% for post in profile.blog_posts.all %}
+<li>{{post.title|title}}</li>
+{% endfor %}
+</ul>
+{% elif profile.user.published_posts%}
+{% for post in profile.user.published_posts %}
+<ul>
+<li>{{post.title|title}}</li>
+</ul>
+{% endfor %}
+{%endif%}
+{% if user.pk == profile.user.pk %}
+<div class="three columns">
+<ul class="task-list">
+<li><a class="btn btn-primary" href="{% url 'userr:user_pw_change' %}">change password</a></li>
+</ul>
+</div>
+{% endif %}
+</div>
+{% endblock %}

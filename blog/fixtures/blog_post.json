@@ -1,0 +1,39 @@
+[
+{
+  "model": "blog.post",
+  "pk": 1,
+  "fields": {
+    "auther": 4,
+    "title": "django",
+    "slug": "django",
+    "text": "this is about web development`",
+    "pub_date": "2019-02-22",
+    "startups": [
+      1
+    ],
+    "tags": [
+      2,
+      1
+    ]
+  }
+},
+{
+  "model": "blog.post",
+  "pk": 2,
+  "fields": {
+    "auther": 3,
+    "title": "django-version 2",
+    "slug": "django2",
+    "text": "the latest web framework written with python",
+    "pub_date": "2018-12-11",
+    "startups": [
+      1
+    ],
+    "tags": [
+      3,
+      2,
+      1
+    ]
+  }
+}
+]

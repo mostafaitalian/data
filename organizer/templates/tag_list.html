@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block main %}
+<h3> Available books </h3>
+{% if tag_list %}
+    <ul>
+        {% for tag in tag_list %}
+         <li> <a href = "{{ tag.get_absolute_url }}">{{tag.title }}</a></li>
+        {% endfor %}
+    <ul>
+{% if is_paginated %}
+      <div class="pagination">
+          <span class="page-links">
+              {% if tag_list.has_previous %}
+                  <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+              {% endif %}
+              <span class="page-current">
+                  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+              </span>
+              {% if tag_list.has_next %}
+                  <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+              {% endif %}
+          </span>
+      </div>
+{% else %}
+          <h4> pagination not working</h4>
+{% endif %}
+{% endblock %}
